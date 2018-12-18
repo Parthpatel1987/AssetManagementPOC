@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><database>
-    <element extends="cmdb_ci_printer" label="Printer" max_length="40" name="x_282518_asset_mgm_printer" sizeclass="1" type="collection">
+    <element extends="cmdb_ci_printer" label="Printer" max_length="40" name="x_282518_asset_mgm_printer" type="collection">
         <element attributes="readonly_clickthrough=true,edge_encryption_enabled=true" label="Asset" max_length="32" name="asset" read_only="true" reference="alm_asset" reference_cascade_rule="delete" type="reference"/>
         <element attributes="edge_encryption_enabled=true" label="Asset tag" max_length="40" name="asset_tag" type="string"/>
         <element attributes="edge_encryption_enabled=true" label="Assigned" max_length="40" name="assigned" type="glide_date_time"/>

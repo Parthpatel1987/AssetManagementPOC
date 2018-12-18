@@ -16,7 +16,7 @@
         <sys_updated_by>admin</sys_updated_by>
         <sys_updated_on>2018-11-22 06:19:16</sys_updated_on>
         <target_name>x_282518_pmps_migr_user</target_name>
-        <target_scope display_value="PMPS Migration POC">d08b53d3db0123009e18bd5139961943</target_scope>
+        <target_scope display_value="">d08b53d3db0123009e18bd5139961943</target_scope>
         <target_type>sys_db_object</target_type>
     </sys_scope_privilege>
 </record_update>
