@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>AddPrinter</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	// implement resource here
+	var asset = request.body.data;
+
+	// Process Companies from Device Data
+	var company = asset.Company;
+	var manageCompanies = new ManageCompanies();
+	var companySysID = manageCompanies.validateCompany(company.Name);
+
+	if(companySysID){
+		
+		var locationSysID = processLocation(asset, companySysID);
+				
+		var userSysID = processUser(asset,companySysID,locationSysID);
+
+		if(userSysID){
+			updateCompanyUser(companySysID, userSysID);
+			updateLocationUser(locationSysID, userSysID);
+		}
+
+		var assetSysID = processAsset(asset, companySysID, locationSysID, userSysID);
+	}
+	else{
+		return new sn_ws_err.BadRequestError("Company doesn't exist. Please create contract for the company to process Asset");
+	}
+
+})(request, response);
+
+function processLocation(asset, companySysID){
+	var location = asset.Location;
+	
+	var locationSysID = null;
+	if(location && companySysID){
+		var manageLocations = new ManageLocations();
+		locationSysID = manageLocations.processLocationHierarchy(location, companySysID);
+	}
+	
+	return locationSysID;
+}
+
+function processUser(asset, company, location){
+
+	var Contact = asset.Contact;
+
+	var manageUsers = new ManageUsers();
+	var userSysID = manageUsers.InsertOrUpdateUser(Contact, company, location);	
+
+	return userSysID;
+}
+
+function updateCompanyUser(company,user){
+	var manageCompanies = new ManageCompanies();
+	manageCompanies.updateCompanyUser(company,user);
+}
+
+function updateLocationUser(location,user){
+	var manageLocations = new ManageLocations();
+	manageLocations.updateLocationUser(location,user);
+}
+
+function processAsset(asset, company, location, contact){
+	var managePrinters = new ManagePrinters();
+	managePrinters.InsertOrUpdatePrinter(asset, company, location, contact);
+}]]></operation_script>
+        <operation_uri>/api/x_282518_asset_mgm/printers</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-26 11:36:49</sys_created_on>
+        <sys_id>b0a97449db02e3009e18bd51399619c3</sys_id>
+        <sys_mod_count>7</sys_mod_count>
+        <sys_name>AddPrinter</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_ws_operation_b0a97449db02e3009e18bd51399619c3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 18:14:48</sys_updated_on>
+        <web_service_definition display_value="Printers">d599fc49db02e3009e18bd5139961982</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_282518_asset_mgm.ManageLocations</api_name>
+        <client_callable>false</client_callable>
+        <description/>
+        <name>ManageLocations</name>
+        <script><![CDATA[var ManageLocations = Class.create();
+ManageLocations.prototype = Object.extendsObject(global.AbstractAjaxProcessor,{
+    
+	locationTable:'x_282518_asset_mgm_location',
+	
+	processLocationHierarchy: function(location,company){
+		var locationHierarchy = ["Country", "State", "City", "Area", "Street", "AddressLine1"];
+
+		var parent = null;
+
+		var generatedManageLocationsField = {
+			"Street":null,
+			"Area":null,
+			"City":null,
+			"State":null,
+			"Country":null
+		};
+		for (i = 0; i < locationHierarchy.length; i++) {
+			var name = location[locationHierarchy[i]];
+
+			if(name){
+				// check in DB if exitst
+				var grManageLocations = new GlideRecord(this.locationTable);
+				grManageLocations.addQuery('name',name);
+				grManageLocations.query();
+				var rowCount = grManageLocations.getRowCount();
+
+				if(rowCount == 0){
+					var grNewManageLocations = new GlideRecord(this.locationTable);
+					grNewManageLocations.initialize();
+
+					grNewManageLocations.name= name;
+					grNewManageLocations.street=generatedManageLocationsField.Street;
+					grNewManageLocations.area=generatedManageLocationsField.Area;
+					grNewManageLocations.city=generatedManageLocationsField.City;
+					grNewManageLocations.state=generatedManageLocationsField.State;
+					grNewManageLocations.country=generatedManageLocationsField.Country,
+					grNewManageLocations.parent=parent;
+					if(i == locationHierarchy.length-1 && company){
+						grNewManageLocations.company = company;					
+					}
+
+					grNewManageLocations.insert();
+
+					parent = grNewManageLocations.sys_id;
+				}
+				else if (rowCount == 1){
+					while (grManageLocations.next()) { 
+						//grManageLocations.name= name;
+						grManageLocations.street=generatedManageLocationsField.Street;
+						grManageLocations.area=generatedManageLocationsField.Area;
+						grManageLocations.city=generatedManageLocationsField.City;
+						grManageLocations.state=generatedManageLocationsField.State;
+						grManageLocations.country=generatedManageLocationsField.Country,
+						grManageLocations.parent=parent;
+						if(i == locationHierarchy.length-1 && company){
+							grManageLocations.company = company;
+						}
+						grManageLocations.update();
+
+						parent = grManageLocations.sys_id;
+					}
+				}		
+
+				generatedManageLocationsField[locationHierarchy[i]] = name;
+			}
+		}
+
+		return parent;
+	},
+	
+	updateLocationUser: function(location,user){
+		var grLocation = new GlideRecord(this.locationTable);
+		grLocation.addQuery('sys_id',location);
+		grLocation.query();
+		var rowCount = grLocation.getRowCount();
+
+		if(rowCount == 1){				
+			while (grLocation.next()) { 
+
+				grLocation.contact = user;
+
+				grLocation.update();
+			}
+		}
+	},
+
+    type: 'ManageLocations'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-21 06:14:55</sys_created_on>
+        <sys_id>4d12c25fdb3123009e18bd5139961975</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>ManageLocations</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_script_include_4d12c25fdb3123009e18bd5139961975</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 15:38:22</sys_updated_on>
+    </sys_script_include>
+</record_update>

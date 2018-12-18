@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ws_operation">
+    <sys_ws_operation action="INSERT_OR_UPDATE">
+        <active>true</active>
+        <consumes>application/json,application/xml,text/xml</consumes>
+        <consumes_customized>false</consumes_customized>
+        <default_operation_uri/>
+        <enforce_acl>cf9d01d3e73003009d6247e603f6a990</enforce_acl>
+        <http_method>POST</http_method>
+        <name>MergeContract</name>
+        <operation_script><![CDATA[(function process(/*RESTAPIRequest*/ request, /*RESTAPIResponse*/ response) {
+
+	// implement resource here
+	var contract = request.body.data;
+
+	var companySysID = processCompany(contract);
+
+	if(companySysID){
+		var locationSysID = processLocation(contract, companySysID);
+
+		if(contract && companySysID){
+			processContract(contract, companySysID,locationSysID);
+
+			var userSysID = processUser(contract,companySysID,locationSysID);
+
+			if(userSysID){
+				updateCompanyUser(companySysID,userSysID);
+				updateLocationUser(locationSysID,userSysID);
+			}
+		}
+	}
+
+	gs.info("Contract has been imported successfully:" + JSON.stringify(contract));
+
+})(request, response);
+
+function processCompany(contract){
+
+	// Process Companies from Device Data	
+	var company = contract.Company;
+
+	var manageCompanies = new ManageCompanies();
+	var companySysID = manageCompanies.InsertOrUpdateCompany(company);
+
+	return companySysID;
+}
+
+function processLocation(contract, companySysID){
+	var location = contract.Location;
+
+	var locationSysID = null;
+	if(location && companySysID){
+		var manageLocations = new ManageLocations();
+		locationSysID = manageLocations.processLocationHierarchy(location, companySysID);
+	}
+
+	return locationSysID;
+}
+
+function processContract(contract,company,location){
+
+	gs.info('processContract '+company+' '+location );
+	
+	var manageContracts = new ManageContracts();
+	var companySysID = manageContracts.processContract(contract,company,location);
+}
+
+function processUser(contract, company, location){
+
+	var Contact = contract.Contact;
+
+	var manageUsers = new ManageUsers();
+	var userSysID = manageUsers.InsertOrUpdateUser(Contact, company, location);	
+
+	return userSysID;
+}
+
+function updateCompanyUser(company,user){
+	var manageCompanies = new ManageCompanies();
+	manageCompanies.updateCompanyUser(company,user);
+}
+
+function updateLocationUser(location,user){
+	var manageLocations = new ManageLocations();
+	manageLocations.updateLocationUser(location,user);
+}]]></operation_script>
+        <operation_uri>/api/x_282518_asset_mgm/contracts</operation_uri>
+        <produces>application/json,application/xml,text/xml</produces>
+        <produces_customized>false</produces_customized>
+        <relative_path>/</relative_path>
+        <request_example/>
+        <requires_acl_authorization>true</requires_acl_authorization>
+        <requires_authentication>true</requires_authentication>
+        <requires_snc_internal_role>true</requires_snc_internal_role>
+        <short_description/>
+        <sys_class_name>sys_ws_operation</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-21 06:42:20</sys_created_on>
+        <sys_id>92b54adfdb3123009e18bd5139961906</sys_id>
+        <sys_mod_count>6</sys_mod_count>
+        <sys_name>MergeContract</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_ws_operation_92b54adfdb3123009e18bd5139961906</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 17:48:44</sys_updated_on>
+        <web_service_definition display_value="Contracts">caa546dfdb3123009e18bd5139961981</web_service_definition>
+        <web_service_version/>
+    </sys_ws_operation>
+</record_update>

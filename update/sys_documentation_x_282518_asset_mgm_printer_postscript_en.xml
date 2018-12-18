@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="postscript" label="Postscript" language="en" table="x_282518_asset_mgm_printer">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element>postscript</element>
+            <help/>
+            <hint/>
+            <label>Postscript</label>
+            <language>en</language>
+            <name>x_282518_asset_mgm_printer</name>
+            <plural>Postscripts</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-27 06:01:48</sys_created_on>
+            <sys_id>73a878dddb4ae3009e18bd5139961986</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>Postscript</sys_name>
+            <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+            <sys_update_name>sys_documentation_x_282518_asset_mgm_printer_postscript_en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-27 06:01:48</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+</record_update>

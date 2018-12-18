@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_282518_asset_mgm.ManageContracts</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>ManageContracts</name>
+        <script><![CDATA[var ManageContracts = Class.create();
+ManageContracts.prototype = Object.extendsObject(global.AbstractAjaxProcessor,{
+    	
+	contractTable:'x_282518_asset_mgm_service_contract',
+
+	processContract: function(contract,company,location){
+		
+		var grContract = new GlideRecord(this.contractTable);
+		grContract.addQuery('vendor_contract',contract.ContractNumber);
+		grContract.query();
+		var rowCount = grContract.getRowCount();
+
+		if(rowCount == 0){
+			grContract = new GlideRecord(this.contractTable);
+
+			grContract.initialize();
+			grContract.vendor_contract = contract.ContractNumber;
+			grContract.contracttype = contract.ContractType;
+			grContract.active = contract.Active;
+			grContract.description = contract.Description;
+			grContract.po_number = contract.PONumber;
+			grContract.customer = company;
+			grContract.location = location;
+
+			grContract.insert();
+		}
+		else if(rowCount == 1){				
+			while (grContract.next()) { 
+				grContract.contracttype = contract.ContractType;
+				grContract.active = contract.Active;
+				grContract.description = contract.Description;
+				grContract.po_number = contract.PONumber;
+				grContract.customer = company;
+				grContract.location = location;
+
+				grContract.update();
+			}
+		}
+	},
+	
+    type: 'ManageContracts'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-21 06:19:07</sys_created_on>
+        <sys_id>e8c2ca9bdb3123009e18bd5139961966</sys_id>
+        <sys_mod_count>4</sys_mod_count>
+        <sys_name>ManageContracts</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_script_include_e8c2ca9bdb3123009e18bd5139961966</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 19:20:41</sys_updated_on>
+    </sys_script_include>
+</record_update>

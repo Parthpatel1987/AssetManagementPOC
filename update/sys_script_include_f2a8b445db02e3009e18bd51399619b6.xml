@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_282518_asset_mgm.ManagePrinters</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>ManagePrinters</name>
+        <script><![CDATA[var ManagePrinters = Class.create();
+ManagePrinters.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+
+	assetTable:'x_282518_asset_mgm_asset',
+	printerTable: 'x_282518_asset_mgm_printer',
+
+	InsertOrUpdatePrinter:function(asset, company, location, contact){
+		var assetSysID = null;
+		var printerSysID = null;
+		
+		var grAsset = new GlideRecord(this.assetTable);
+		grAsset.addQuery('deviceid',asset.DeviceID);
+		grAsset.query();
+		var rowCount = grAsset.getRowCount();
+
+		if(rowCount == 0){
+			grAsset = new GlideRecord(this.assetTable);
+
+			gs.info('assetTable initialize');
+			grAsset.initialize();
+			grAsset.deviceid = asset.DeviceID;
+			grAsset.asset_tag = asset.AssetTag;
+			grAsset.serial_number = asset.SerialNumber;
+			grAsset.currentsticker = asset.CurrentSticker;
+			grAsset.description = asset.Description;
+			grAsset.managed_by = contact;
+			grAsset.owned_by = contact;
+			grAsset.company = company;
+			grAsset.location = location;
+
+			grAsset.insert();
+
+			assetSysID = grAsset.sys_id;
+
+			if(assetSysID){
+				gs.info('printer Insert');
+				var grPrinter = new GlideRecord(this.printerTable);
+
+				grPrinter.initialize();
+				grPrinter.colors = asset.TotalColors;
+				grPrinter.color = asset.IsColor;
+				grPrinter.ppm = asset.PagesPerMinute;
+				grPrinter.paper = asset.PaperSize;
+				grPrinter.print_type = asset.PrintType;
+				grPrinter.ip_address = asset.IPAddress;
+				grPrinter.mac_address = asset.MACAddress;
+				grPrinter.can_print = asset.CanPrint;
+				grPrinter.model_number = asset.ModelNumber;
+				grPrinter.company = company;
+				grPrinter.asset = assetSysID;
+
+				grPrinter.insert();
+
+				printerSysID = grPrinter.sys_id;
+			}
+		}
+
+		return assetSysID;
+	},
+
+	GetAllAssets: function(company){
+		var allDevices=[];
+
+		
+		var grPrint = new GlideRecord(this.printerTable);
+		grPrint.addQuery('company',company);
+		grPrint.query();
+		while (grPrint.next()) { 
+			gs.info(JSON.stringify(grPrint.getValue('asset')));
+		}
+		//Get a GlideRecord to start things up
+		var grAsset = new GlideRecord(this.assetTable);
+		//grAsset.addJoinQuery(this.printerTable, 'sys_id', 'asset');
+		grAsset.addQuery('company',company);
+
+		grAsset.query();
+		while (grAsset.next()) { 
+						
+			var device = {
+				Description: grAsset.getValue('description'),
+				DeviceID: grAsset.getValue('deviceid'),
+				SerialNumber: grAsset.getValue('serial_number'),
+				CurrentSticker: grAsset.getValue('currentsticker'),
+				AssetTag: grAsset.getValue('asset_tag'),
+				sys_id: grAsset.getValue('sys_id'),
+				location: grAsset.getValue('location')
+			};
+
+			var grPrinter = new GlideRecord(this.printerTable);
+			grPrinter.addQuery('asset', device.sys_id);
+
+			grPrinter.query();
+			while (grPrinter.next()) { 
+				device.TotalColors = grPrinter.colors;
+				device.IsColor = grPrinter.color;
+				device.PagesPerMinute = grPrinter.ppm;
+				device.PaperSize = grPrinter.paper;
+				device.PrintType = grPrinter.print_type;
+				device.IPAddress = grPrinter.ip_address;
+				device.MACAddress = grPrinter.mac_address;
+				device.CanPrint = grPrinter.can_print;
+				device.ModelNumber = grPrinter.model_number;
+			}
+
+			allDevices.push(device);
+		}
+
+		return allDevices;
+	},
+
+	type: 'ManagePrinters'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-26 11:26:56</sys_created_on>
+        <sys_id>f2a8b445db02e3009e18bd51399619b6</sys_id>
+        <sys_mod_count>27</sys_mod_count>
+        <sys_name>ManagePrinters</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy>read</sys_policy>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_script_include_f2a8b445db02e3009e18bd51399619b6</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-30 09:42:08</sys_updated_on>
+    </sys_script_include>
+</record_update>

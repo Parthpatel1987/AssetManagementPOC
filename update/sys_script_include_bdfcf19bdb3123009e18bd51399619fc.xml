@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_script_include">
+    <sys_script_include action="INSERT_OR_UPDATE">
+        <access>package_private</access>
+        <active>true</active>
+        <api_name>x_282518_asset_mgm.ManageCompanies</api_name>
+        <client_callable>true</client_callable>
+        <description/>
+        <name>ManageCompanies</name>
+        <script><![CDATA[var ManageCompanies = Class.create();
+ManageCompanies.prototype = Object.extendsObject(global.AbstractAjaxProcessor,{
+
+	companyTable: 'x_282518_asset_mgm_company',
+	
+	getTestMessage:function(){
+		gs.info('test message executed');
+		return 'hey there. it is me!';
+	},
+
+	GetAllCompanies: function(){
+		var returnObj = {};
+		var companies=[];
+
+		//Get a GlideRecord to start things up
+		var grCompany = new GlideRecord(this.companyTable);
+
+		grCompany.query();
+		while (grCompany.next()) { 
+			var device = {
+				Name: grCompany.getValue('name'),
+				Notes: grCompany.getValue('notes'),
+				sys_id: grCompany.getValue('sys_id'),
+				//location: grCompany.getValue('location')
+			};
+
+			// add code here to process the incident record 
+			companies.push(device);
+		}
+
+		gs.info("Companies retrieved successfully:" + JSON.stringify(companies));
+
+		returnObj.companies = companies;
+
+		// 		try { 
+		// 			 var r = new sn_ws.RESTMessageV2('x_282518_asset_mgm.OrionAPIs', 'Default GET');
+		// 			 var response2 = r.executeAsync();
+
+		// 			 if(response2){
+		// 				 var responseBody = response2.getBody();
+		// 				 var httpStatus = response2.getStatusCode();
+
+		// 				 var responseObj = {
+		// 					 restMessageResponse : {
+		// 						 httpStatus: httpStatus,
+		// 						 responseBody: responseBody
+		// 					 }
+		// 				 };
+
+		// 				 gs.info("API Called successfully to sync data to orion: " + JSON.stringify(response2));
+		// 			 }
+		// 		}
+		// 		catch(ex) {
+		// 			 gs.error(ex.message);
+		// 		}
+
+		return  returnObj;
+	},
+
+	InsertOrUpdateCompany: function (company){
+		var companySysID = null;
+		var grCompany = new GlideRecord(this.companyTable);
+		grCompany.addQuery('name',company.Name);
+		grCompany.query();
+		var rowCount = grCompany.getRowCount();
+
+		if(rowCount == 0){
+			grCompany = new GlideRecord(this.companyTable);
+
+			grCompany.initialize();
+			grCompany.name = company.Name;
+			grCompany.notes = company.Notes;
+
+			grCompany.insert();
+
+			companySysID = grCompany.sys_id;
+		}
+		else if(rowCount == 1){
+			while (grCompany.next()) {
+
+				grCompany.name = company.Name;
+				grCompany.notes = company.Notes;
+
+				grCompany.update();
+
+				companySysID = grCompany.sys_id;
+			}
+		}
+
+		return companySysID;
+	},
+
+	updateCompanyUser: function(company,user){
+		var grCompany = new GlideRecord(this.companyTable);
+		grCompany.addQuery('sys_id',company);
+		grCompany.query();
+		var rowCount = grCompany.getRowCount();
+
+		if(rowCount == 1){				
+			while (grCompany.next()) { 
+
+				grCompany.contact = user;
+
+				grCompany.update();
+			}
+		}
+	},
+
+	validateCompany: function(companyName){
+		var companySysID = null;
+		var grCompany = new GlideRecord(this.companyTable);
+		grCompany.addQuery('name',companyName);
+		grCompany.query();
+		var rowCount = grCompany.getRowCount();
+
+		if(rowCount == 1){
+			while (grCompany.next()) {		
+				companySysID = grCompany.sys_id;
+			}
+		}
+
+		return companySysID;
+	},
+
+	type: 'ManageCompanies'
+});]]></script>
+        <sys_class_name>sys_script_include</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-21 06:07:18</sys_created_on>
+        <sys_id>bdfcf19bdb3123009e18bd51399619fc</sys_id>
+        <sys_mod_count>22</sys_mod_count>
+        <sys_name>ManageCompanies</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy>protected</sys_policy>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_script_include_bdfcf19bdb3123009e18bd51399619fc</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 15:36:46</sys_updated_on>
+    </sys_script_include>
+</record_update>

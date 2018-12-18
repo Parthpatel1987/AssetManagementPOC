@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_ui_page">
+    <sys_ui_page action="INSERT_OR_UPDATE">
+        <category>general</category>
+        <client_script><![CDATA[angular.module('angularapp',[]);
+angular.module('angularapp').controller('AngularAppCtrl',function($scope){
+	
+	$scope.myVar = '';
+	$scope.i = 0;
+	
+	$scope.clearText = function(){
+		$scope.myVar = '';
+		$scope.i++;
+		alert('The myVar value was cleared '+ $scope.i +' times by '+ g_user.userName);
+	};
+	
+	$scope.submitData = function(){
+		var ga = new GlideAjax('ManageCompanies');//this is the script include
+		
+		//ga.addParam('sysparm_name','initialize'); 
+		ga.addParam('sysparm_name', 'GetAllCompanies'); //this is the function within the script include
+
+
+		//ga.addParam("sysparm_std_change", g_form.getValue('u_standard_change_num'));
+		
+		ga.getXML(getResponse);
+		//ga.getXMLWait();
+		
+		//alert(ga.getAnswer());
+	};
+	
+	function getResponse(response) {
+		console.log(JSON.parse(response.responseXML.documentElement.getAttribute('answer')));
+		//var values = response.responseXML.documentElement.getAttribute('answer').toString().split('|');
+		alert(response);
+		//g_form.setValue('short_description', values[0]);
+
+		//g_form.setValue('description', values[1]);
+
+
+	}
+});
+]]></client_script>
+        <description/>
+        <direct>false</direct>
+        <endpoint>x_282518_asset_mgm_ManageContract.do</endpoint>
+        <html><![CDATA[<?xml version="1.0" encoding="utf-8" ?>
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+	<style type="text/css">
+		.form-style-1 {
+		<!--margin:10px auto;-->
+		max-width: 400px;
+		padding: 20px 12px 10px 20px;
+		font: 13px "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+		}
+		.form-style-1 li {
+		padding: 0;
+		display: block;
+		list-style: none;
+		margin: 10px 0 0 0;
+		}
+		.form-style-1 label{
+		margin:0 0 3px 0;
+		padding:0px;
+		display:block;
+		font-weight: bold;
+		}
+		.form-style-1 input[type=text], 
+		.form-style-1 input[type=date],
+		.form-style-1 input[type=datetime],
+		.form-style-1 input[type=number],
+		.form-style-1 input[type=search],
+		.form-style-1 input[type=time],
+		.form-style-1 input[type=url],
+		.form-style-1 input[type=email],
+		textarea, 
+		select{
+		box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		border:1px solid #BEBEBE;
+		padding: 7px;
+		margin:0px;
+		-webkit-transition: all 0.30s ease-in-out;
+		-moz-transition: all 0.30s ease-in-out;
+		-ms-transition: all 0.30s ease-in-out;
+		-o-transition: all 0.30s ease-in-out;
+		outline: none;	
+		}
+		.form-style-1 input[type=text]:focus, 
+		.form-style-1 input[type=date]:focus,
+		.form-style-1 input[type=datetime]:focus,
+		.form-style-1 input[type=number]:focus,
+		.form-style-1 input[type=search]:focus,
+		.form-style-1 input[type=time]:focus,
+		.form-style-1 input[type=url]:focus,
+		.form-style-1 input[type=email]:focus,
+		.form-style-1 textarea:focus, 
+		.form-style-1 select:focus{
+		-moz-box-shadow: 0 0 8px #88D5E9;
+		-webkit-box-shadow: 0 0 8px #88D5E9;
+		box-shadow: 0 0 8px #88D5E9;
+		border: 1px solid #88D5E9;
+		}
+		.form-style-1 .field-divided{
+		width: 49%;
+		}
+
+		.form-style-1 .field-long{
+		width: 100%;
+		}
+		.form-style-1 .field-select{
+		width: 100%;
+		}
+		.form-style-1 .field-textarea{
+		height: 100px;
+		}
+		.form-style-1 input[type=submit], .form-style-1 input[type=button]{
+		background: #4B99AD;
+		padding: 8px 15px 8px 15px;
+		border: none;
+		color: #fff;
+		}
+		.form-style-1 input[type=submit]:hover, .form-style-1 input[type=button]:hover{
+		background: #4691A4;
+		box-shadow:none;
+		-moz-box-shadow:none;
+		-webkit-box-shadow:none;
+		}
+		.form-style-1 .required{
+		color:red;
+		}
+
+		.container {
+		display: flex;
+		padding: 2px 16px;
+		}
+		.container > div {
+		flex: 1; /*grow*/
+		}
+
+		.card {
+		display: flex;
+		box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+		transition: 0.3s;
+		width: 40%;
+		}
+
+		.card:hover {
+		box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		}
+
+	</style>
+	<form ng-app="angularapp" ng-controller="AngularAppCtrl as appctrl">		
+		<div class="container">
+			<div id="company" style="width:500px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+				<ul class="form-style-1">					
+					<li>
+						<h4>Company Details</h4><hr style="margin-top: 0px;"/>
+						<label>Company <span class="required">*</span></label>
+						<input type="text" name="companyName" class="field-long" ng-model="companyName" />
+
+					</li>
+					<li>
+						<label>Notes <span class="required">*</span></label>
+						<textarea name="notes" id="notes" class="field-long field-textarea" ng-model="companyNotes"></textarea>
+
+					</li>
+				</ul>
+			</div>
+			<div id="contract" style="width:500px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+				<ul class="form-style-1">
+					<li>
+						<h4>Contract Details</h4><hr style="margin-top: 0px;"/>
+						<label>Contract Number <span class="required">*</span></label>
+						<input type="text" name="contractNumber" class="field-long" placeholder="Contract Number" />
+					</li>
+					<li>
+						<label>Contract Type <span class="required">*</span></label>
+						<input type="text" name="contractType" class="field-long" placeholder="Contract Type" />
+					</li>					
+					<li>
+						<label>Description <span class="required">*</span></label>
+						<textarea name="contractDescription" id="contractDescription" class="field-long field-textarea"></textarea>
+					</li>
+				</ul>
+			</div>
+			<div id="location" style="width:500px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">
+				<ul class="form-style-1">
+					<li>
+						<h4>Address</h4><hr style="margin-top: 0px;"/>
+						<label>Address Line <span class="required">*</span></label>
+						<input type="text" name="addressLine" class="field-long" placeholder="Address" />
+					</li>
+					<li>
+						<label>Street <span class="required">*</span></label>
+						<input type="text" name="street" class="field-long" placeholder="Street" />
+					</li>
+					<li>
+						<label>Area/City <span class="required">*</span></label>
+						<input type="text" name="area" class="field-divided" placeholder="Area" /> 
+						<input type="text" name="city" class="field-divided" placeholder="City" />
+					</li>
+					<li>
+						<label>State/Country <span class="required">*</span></label>
+						<input type="text" name="state" class="field-divided" placeholder="State" /> 
+						<input type="text" name="country" class="field-divided" placeholder="Country" />
+					</li>				
+				</ul>
+			</div>
+		</div>
+		<div class="container" style="width:1140px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);">					
+			<div id="contact1" style="width:500px;">
+				<ul class="form-style-1">		
+					<h4>User</h4><hr style="margin-top: 0px;"/>
+					<li><label>Full Name <span class="required">*</span></label><input type="text" name="field1" class="field-divided" placeholder="First" /> <input type="text" name="field2" class="field-divided" placeholder="Last" /></li>
+					<li>
+						<label>User ID <span class="required">*</span></label>
+						<input type="text" name="userid" class="field-long" placeholder="User ID" />
+					</li>					
+				</ul>
+			</div>
+			<div id="contact2" style="width:500px;">
+				<ul class="form-style-1">					
+					<li>
+						<h4 style="color: transparent;">User</h4><hr style="margin-top: 0px;"/>
+						<label>Emaployee Number <span class="required">*</span></label>
+						<input type="text" name="EmaployeeNumber" class="field-long" placeholder="Emaployee Number" />
+					</li>
+					<li>
+						<label>Mobile <span class="required">*</span></label>
+						<input type="text" name="Mobile" class="field-long" placeholder="Mobile" />
+					</li>
+				</ul>
+			</div>
+			<div id="contact3" style="width:500px;">
+				<ul class="form-style-1">
+					<li>
+						<h4 style="color: transparent;">User</h4><hr style="margin-top: 0px;"/>
+						<label>Email <span class="required">*</span></label>
+						<input type="text" name="Email" class="field-long" placeholder="Email" />
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="submit">
+			<ul class="form-style-1" style="margin:10px auto;">				
+				<li>		
+					<input type="submit" value="Submit" ng-click='submitData()' />
+					<input type="submit" value="Clear" ng-click='clearText()' style="margin-left:10px;" />
+				</li>
+			</ul>
+		</div>
+	</form>
+</j:jelly>]]></html>
+        <name>ManageContract</name>
+        <processing_script/>
+        <sys_class_name>sys_ui_page</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2018-11-24 14:11:38</sys_created_on>
+        <sys_id>a2db4fd0dbca63009e18bd51399619c3</sys_id>
+        <sys_mod_count>61</sys_mod_count>
+        <sys_name>ManageContract</sys_name>
+        <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+        <sys_update_name>sys_ui_page_a2db4fd0dbca63009e18bd51399619c3</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2018-11-26 19:18:09</sys_updated_on>
+    </sys_ui_page>
+</record_update>

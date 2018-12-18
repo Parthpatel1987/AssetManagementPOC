@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_ui_form_sections form_id="b7c0c95adb422300ff20e04a48961905" sys_domain="global" table="x_282518_asset_mgm_asset" version="3">
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>0</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:14</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>4cd0c95adb422300ff20e04a4896190f</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_282518_asset_mgm_asset" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">b7c0c95adb422300ff20e04a48961905</sys_ui_form>
+            <sys_ui_section caption="NULL" display_value="" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">4cd0c95adb422300ff20e04a4896190d</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:14</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>1</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:14</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>0cd0c95adb422300ff20e04a48961913</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_282518_asset_mgm_asset" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">b7c0c95adb422300ff20e04a48961905</sys_ui_form>
+            <sys_ui_section caption="General" display_value="General" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">40d0c95adb422300ff20e04a48961910</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:14</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>2</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:14</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>00d0c95adb422300ff20e04a4896190b</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_282518_asset_mgm_asset" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">b7c0c95adb422300ff20e04a48961905</sys_ui_form>
+            <sys_ui_section caption="Financial" display_value="Financial" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">80d0c95adb422300ff20e04a48961908</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:14</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>3</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:14</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>48d0c95adb422300ff20e04a4896190d</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_282518_asset_mgm_asset" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">b7c0c95adb422300ff20e04a48961905</sys_ui_form>
+            <sys_ui_section caption="Contracts" display_value="Contracts" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">88d0c95adb422300ff20e04a4896190b</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:14</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form_section action="INSERT_OR_UPDATE">
+            <position>4</position>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:14</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>c0d0c95adb422300ff20e04a48961915</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_overrides/>
+            <sys_ui_form display_value="x_282518_asset_mgm_asset" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">b7c0c95adb422300ff20e04a48961905</sys_ui_form>
+            <sys_ui_section caption="Activities" display_value="Activities" name="x_282518_asset_mgm_asset" sys_domain="global" view="Default view">00d0c95adb422300ff20e04a48961914</sys_ui_section>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:14</sys_updated_on>
+        </sys_ui_form_section>
+        <sys_ui_form action="INSERT_OR_UPDATE">
+            <name>x_282518_asset_mgm_asset</name>
+            <roles/>
+            <sys_class_name>sys_ui_form</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2018-11-30 09:11:13</sys_created_on>
+            <sys_domain>global</sys_domain>
+            <sys_domain_path>/</sys_domain_path>
+            <sys_id>b7c0c95adb422300ff20e04a48961905</sys_id>
+            <sys_mod_count>0</sys_mod_count>
+            <sys_name>x_282518_asset_mgm_asset</sys_name>
+            <sys_overrides/>
+            <sys_package display_value="Asset_Management" source="x_282518_asset_mgm">71ccbd1bdb3123009e18bd513996196c</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="Asset_Management">71ccbd1bdb3123009e18bd513996196c</sys_scope>
+            <sys_update_name>sys_ui_form_sections_b7c0c95adb422300ff20e04a48961905</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2018-11-30 09:11:13</sys_updated_on>
+            <sys_user/>
+            <view display_value="Default view" name="NULL">Default view</view>
+            <view_name/>
+        </sys_ui_form>
+    </sys_ui_form_sections>
+</record_update>
